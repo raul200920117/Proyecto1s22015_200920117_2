@@ -70,4 +70,17 @@ public class prueba {
         
         return null;
     }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "login")
+    public boolean login(@WebParam(name = "nombre") String nombre, @WebParam(name = "pass") String pass) {
+        //TODO write your implementation code here:
+        if(nombre.equals("admin") && pass.equals("1234")){
+           return true;
+        }else{
+           return false; 
+        }
+    }
 }

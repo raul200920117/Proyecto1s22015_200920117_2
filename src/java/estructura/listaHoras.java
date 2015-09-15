@@ -11,4 +11,33 @@ package estructura;
  */
 public class listaHoras {
     
+    NodoHoras primero;
+    NodoHoras ultimo;
+    
+    public listaHoras(){
+        primero = null;
+    }
+    
+    public void insertar(String hora, String estacion){
+        
+        NodoHoras nuevo = new NodoHoras(hora,estacion);
+        
+        if(primero != null){
+            ultimo.setSig(nuevo);
+            ultimo = nuevo;
+        }else{
+            primero = nuevo;
+            ultimo = nuevo;
+        }
+    }
+    
+    public void recorrer(){
+        NodoHoras aux;
+        aux = primero;
+        
+        while (aux != null){
+            //mostrar o graficar como sea
+        }
+    }
+    
 }

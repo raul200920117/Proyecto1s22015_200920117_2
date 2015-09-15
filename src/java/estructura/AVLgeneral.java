@@ -10,7 +10,7 @@ package estructura;
  * @author Raulk
  */
 public class AVLgeneral {
-    NodoG raiz;
+    public NodoG raiz;
     
     public AVLgeneral() {
         raiz = null;

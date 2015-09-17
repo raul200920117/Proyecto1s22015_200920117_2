@@ -16,12 +16,20 @@ import javax.jws.WebParam;
 @WebService(serviceName = "prueba")
 public class prueba {
 
-    AVLgeneral arbol;
+    AVLgeneral general;
+    AVLadmin admin;
+    AVLclave clave;
+    choferAVL chofer;
+    listaBuses buses;
     int repeticiones;
     String ret;
     
     public prueba(){
-       arbol = new AVLgeneral();
+       general = new AVLgeneral();
+       admin = new AVLadmin();
+       clave = new AVLclave();
+       chofer = new choferAVL();
+       buses = new listaBuses();
        repeticiones = 0;
        ret = "";
     }
@@ -31,8 +39,8 @@ public class prueba {
      */
     @WebMethod(operationName = "hello")
     public String hello(@WebParam(name = "name") String txt) {
-         if (!txt.equals("")){
-             arbol.insert(repeticiones, txt);
+         if (!(txt.equals("") || txt.equals("0"))){
+             general.insert(repeticiones, txt, txt);
              repeticiones++; 
              return "insertado con exito en el arbol " + txt + " !";
          }else{
@@ -47,9 +55,10 @@ public class prueba {
     public String mostrar() {
         //TODO write your implementation code here:
         NodoG aux;
-        aux = arbol.raiz;
+        aux = general.raiz;
         ret = "";
         data(aux);
+        admin.graficar();
         return ret;
     }
     

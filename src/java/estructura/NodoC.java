@@ -10,11 +10,13 @@ package estructura;
  * @author Raulk
  */
 public class NodoC {
-    public NodoC(int id_Estacion, String nombre, NodoC padre) {
+    public NodoC(int id_Estacion, String nombre, String pass , NodoC padre) {
         this.id_Estacion = id_Estacion;
         this.nombre = nombre;
         this.padre = padre;
+        this.pass = pass;
         this.personas_sist = 0;
+        this.eq = 0;
         this.padre = padre;
         this.izquierda = null;
         this.derecha = null;
@@ -23,6 +25,7 @@ public class NodoC {
     
     private int id_Estacion;
     private String nombre;
+    private String pass;
     private int personas_sist;
     private int eq;
     private NodoC padre;
@@ -125,5 +128,19 @@ public class NodoC {
      */
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    /**
+     * @return the pass
+     */
+    public String getPass() {
+        return pass;
+    }
+
+    /**
+     * @param pass the pass to set
+     */
+    public void setPass(String pass) {
+        this.pass = pass;
     }
 }

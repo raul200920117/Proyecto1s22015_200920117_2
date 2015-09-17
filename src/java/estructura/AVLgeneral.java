@@ -5,20 +5,28 @@
  */
 package estructura;
 
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
 /**
  *
  * @author Raulk
  */
 public class AVLgeneral {
     public NodoG raiz;
+    String graficar;
+    String rel;
     
     public AVLgeneral() {
         raiz = null;
+        graficar = "";
+        rel = "";
     }
     
- public boolean insert(int clave, String nombre) {
+ public boolean insert(int clave, String nombre, String pass) {
         if (raiz == null)
-            raiz = new NodoG(clave,nombre, null);
+            raiz = new NodoG(clave,nombre,pass,null);
         else {
             NodoG n = raiz;
             NodoG padre;
@@ -33,9 +41,9 @@ public class AVLgeneral {
  
                 if (n == null) {
                     if (goLeft) {
-                        padre.setIzquierda(new NodoG(clave, nombre, padre));
+                        padre.setIzquierda(new NodoG(clave,nombre,pass,padre));
                     } else {
-                        padre.setDerecha(new NodoG(clave,nombre, padre));
+                        padre.setDerecha(new NodoG(clave,nombre,pass,padre));
                     }
                     rebalancear(padre);
                     break;
@@ -213,5 +221,112 @@ public class AVLgeneral {
             }
         }
         return null;
+    }
+    
+    public void graficar(){
+        
+        auxGraph();
+        
+         try{
+            //Abro stream, crea el fichero si no existe
+            FileWriter fw = new FileWriter("C:\\Users\\Raulk\\Documents\\NetBeansProjects\\paginaJSP\\web\\images\\AVLgeneral.dot");
+            fw.write("digraph g { \n");
+            
+            fw.write(graficar + "\n");
+            fw.write(rel + "\n");   
+           
+            fw.write("} \n");
+            //Cierro el stream
+            fw.close(); 
+                //Abro el stream, el fichero debe existir
+            FileReader fr=new FileReader("C:\\Users\\Raulk\\Documents\\NetBeansProjects\\paginaJSP\\web\\images\\AVLgeneral.dot");
+            //Leemos el fichero y lo mostramos por pantalla
+            int valor=fr.read();
+            while(valor!=-1){
+                System.out.print((char)valor);
+                valor=fr.read();
+            }
+            //Cerramos el stream
+            fr.close();
+            
+            //llamamos graphviz
+            graphviz();
+            
+        }catch(IOException e){
+            System.out.println("Error E/S: "+e);
+        }
+    }
+    
+    private void graphviz(){
+     
+        try {
+
+            String dotPath = "C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe";
+            String fileInputPath = "C:\\Users\\Raulk\\Documents\\NetBeansProjects\\paginaJSP\\web\\images\\AVLgeneral.dot";
+            String fileOutputPath = "C:\\Users\\Raulk\\Documents\\NetBeansProjects\\paginaJSP\\web\\images\\AVLgeneral.jpg";
+            //Users\\Raulk\\Documents\\NetBeansProjects\\practica1\\src\\imagenes\\lista.jpg
+            String tParam = "-Tjpg";
+            String tOParam = "-o";
+
+            String[] cmd = new String[5];
+            cmd[0] = dotPath;
+            cmd[1] = tParam;
+            cmd[2] = fileInputPath;
+            cmd[3] = tOParam;
+            cmd[4] = fileOutputPath;
+            Runtime rt = Runtime.getRuntime();
+
+            rt.exec(cmd);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+        }
+    }
+    
+    private void auxGraph(){
+        NodoG aux;
+        aux = raiz;
+        graficar = "";
+        rel = "";
+        auxGraph2(aux);
+    }
+    
+    private void auxGraph2(NodoG aus){
+        
+        if(aus.getIzquierda() != null){
+            auxGraph2(aus.getIzquierda());
+        }
+        
+        graficar += "nod" + aus.getId_Estacion() + " [shape=record ,color=\"green\", label= \" { Id estacion : " + aus.getId_Estacion()
+                        + " |  personas : " + "" + aus.getPersonas_sist() + " } | { nombre: " + aus.getNombre() + "| equilibrio: " + aus.getEq() + " }  \"] ; \n";
+        if(aus.getIzquierda()!=null) rel += "nod" + aus.getId_Estacion() + " -> nod" + aus.getIzquierda().getId_Estacion() + " [color = red] ; \n";
+        
+        if(aus.getDerecha()!=null) rel += "nod" + aus.getId_Estacion() + " -> nod" + aus.getDerecha().getId_Estacion() + " [color = red] ; \n";
+        
+        
+        if(aus.getDerecha() != null){
+            auxGraph2(aus.getDerecha());
+        }
+        
+    }
+    
+    public boolean comprobar(int estacion, String pass){
+        NodoG aux;
+        aux = raiz;
+        
+        while(aux != null){
+            if(aux.getId_Estacion() > estacion){
+                aux = aux.getIzquierda();
+            }else if(aux.getId_Estacion() < estacion){
+                aux = aux.getDerecha();
+            }else if(aux.getId_Estacion() == estacion && aux.getPass().equals(pass)){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        
+        return false;
     }
 }

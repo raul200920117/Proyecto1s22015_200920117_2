@@ -11,11 +11,13 @@ package estructura;
  */
 public class NodoG {
     
-    public NodoG(int id_Estacion, String nombre, NodoG padre) {
+    public NodoG(int id_Estacion, String nombre, String pass, NodoG padre) {
         this.id_Estacion = id_Estacion;
         this.nombre = nombre;
         this.padre = padre;
+        this.pass = pass;
         this.personas_sist = 0;
+        this.eq = 0;
         this.padre = padre;
         this.izquierda = null;
         this.derecha = null;
@@ -25,6 +27,7 @@ public class NodoG {
     private int id_Estacion;
     private String nombre;
     private int personas_sist;
+    private String pass;
     private int eq;
     private NodoG padre;
     private NodoG izquierda;
@@ -126,5 +129,19 @@ public class NodoG {
      */
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    /**
+     * @return the pass
+     */
+    public String getPass() {
+        return pass;
+    }
+
+    /**
+     * @param pass the pass to set
+     */
+    public void setPass(String pass) {
+        this.pass = pass;
     }
 }

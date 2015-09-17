@@ -13,37 +13,37 @@ import java.io.IOException;
  *
  * @author Raulk
  */
-public class AVLclave {
-    NodoC raiz;
+public class AVLadmin {
+    NodoAdmin raiz;
     String graficar;
     String rel;
     
-    public AVLclave() {
+    public AVLadmin() {
         raiz = null;
         graficar = "";
         rel = "";
     }
     
- public boolean insert(int clave, String nombre, String pass) {
+ public boolean insert(String correo, String nombre) {
         if (raiz == null)
-            raiz = new NodoC(clave,nombre,pass, null);
+            raiz = new NodoAdmin(correo,nombre, null);
         else {
-            NodoC n = raiz;
-            NodoC padre;
+            NodoAdmin n = raiz;
+            NodoAdmin padre;
             while (true) {
-                if (n.getId_Estacion()== clave)
+                if (n.getCorreo().equals(correo))
                     return false;
  
                 padre = n;
  
-                boolean goLeft = n.getId_Estacion() > clave;
+                boolean goLeft = n.getCorreo().compareTo(correo) > 0;
                 n = goLeft ? n.getIzquierda() : n.getDerecha();
  
                 if (n == null) {
                     if (goLeft) {
-                        padre.setIzquierda(new NodoC(clave,nombre,pass, padre));
+                        padre.setIzquierda(new NodoAdmin(correo,nombre, padre));
                     } else {
-                        padre.setDerecha(new NodoC(clave,nombre,pass, padre));
+                        padre.setDerecha(new NodoAdmin(correo,nombre, padre));
                     }
                     rebalancear(padre);
                     break;
@@ -53,28 +53,28 @@ public class AVLclave {
         return true;
     }
     
- public void borrar(int borrado) {
+ public void borrar(String borrado) {
         if (raiz == null)
             return;
-        NodoC n = raiz;
-        NodoC padre = raiz;
-        NodoC borNodo = null;
-        NodoC hijo = raiz;
+        NodoAdmin n = raiz;
+        NodoAdmin padre = raiz;
+        NodoAdmin borNodo = null;
+        NodoAdmin hijo = raiz;
  
         while (hijo != null) {
             padre = n;
             n = hijo;
-            hijo = borrado >= n.getId_Estacion() ? n.getDerecha() : n.getIzquierda();
-            if (borrado == n.getId_Estacion())
+            hijo = borrado.compareTo(n.getCorreo()) >= 0 ? n.getDerecha() : n.getIzquierda();
+            if (borrado.equals(n.getCorreo()))
                 borNodo = n;
         }
  
         if (borNodo != null) {
-            borNodo.setId_Estacion(n.getId_Estacion());
+            borNodo.setCorreo(n.getCorreo());
  
             hijo = n.getIzquierda() != null ? n.getIzquierda() : n.getDerecha();
  
-            if (raiz.getId_Estacion() == borrado) {
+            if (raiz.getCorreo().equals(borrado)) {
                 raiz = hijo;
             } else {
                 if (padre.getIzquierda() == n) {
@@ -87,7 +87,7 @@ public class AVLclave {
         }
     }
  
-     private void rebalancear(NodoC n) {
+     private void rebalancear(NodoAdmin n) {
         setBalance(n);
  
         if (n.getEq() == -2) {
@@ -110,9 +110,9 @@ public class AVLclave {
         }
     }
      
-    private NodoC rotDD(NodoC aux) {
+    private NodoAdmin rotDD(NodoAdmin aux) {
  
-        NodoC base = aux.getDerecha();
+        NodoAdmin base = aux.getDerecha();
         base.setPadre(aux.getPadre());
  
         aux.setDerecha(base.getIzquierda()); 
@@ -136,9 +136,9 @@ public class AVLclave {
         return base;
     }
     
-    private NodoC rotII(NodoC aux) {
+    private NodoAdmin rotII(NodoAdmin aux) {
  
-        NodoC base = aux.getIzquierda();
+        NodoAdmin base = aux.getIzquierda();
         base.setPadre(aux.getPadre());
  
         aux.setIzquierda(base.getDerecha());
@@ -162,17 +162,17 @@ public class AVLclave {
         return base;
     }
     
-    private NodoC rotID(NodoC n) {
+    private NodoAdmin rotID(NodoAdmin n) {
         n.setIzquierda(rotDD(n.getIzquierda()));
         return rotII(n);
     }
     
-    private NodoC rotDI(NodoC n) {
+    private NodoAdmin rotDI(NodoAdmin n) {
         n.setDerecha(rotII(n.getDerecha()));
         return rotDD(n);
     }
     
-    private int altura(NodoC n) {
+    private int altura(NodoAdmin n) {
         if (n == null) {
             return -1;
         } else {
@@ -180,41 +180,41 @@ public class AVLclave {
         }
     }
 
-    private void setBalance(NodoC... nodos) {
-        for (NodoC n : nodos)
+    private void setBalance(NodoAdmin... nodos) {
+        for (NodoAdmin n : nodos)
             n.setEq(altura(n.getDerecha()) - altura(n.getIzquierda()));
     }
     
     
        
     public void mostrar(){
-        NodoC aux;
+        NodoAdmin aux;
         aux = raiz;
         auxMostrar(aux);
      }
     
-    private void auxMostrar(NodoC auxi) {
+    private void auxMostrar(NodoAdmin auxi) {
         
-        System.out.println("act: " + auxi.getId_Estacion() );
+        System.out.println("act: " + auxi.getCorreo() );
   
         
         if(auxi.getIzquierda() != null){
-            System.out.println("izq: " + auxi.getIzquierda().getId_Estacion());
+            System.out.println("izq: " + auxi.getIzquierda().getCorreo());
             auxMostrar(auxi.getIzquierda());            
         }
         
         if(auxi.getDerecha() != null){
-            System.out.println("der: " + auxi.getDerecha().getId_Estacion());
+            System.out.println("der: " + auxi.getDerecha().getCorreo());
             auxMostrar(auxi.getDerecha());
         }
     }
     
-    public NodoC modificar(int id_nodo){
-        NodoC aux = raiz;
+    public NodoAdmin modificar(String id_nodo){
+        NodoAdmin aux = raiz;
         while(aux != null){
-            if(aux.getId_Estacion() > id_nodo){
+            if(aux.getCorreo().compareTo(id_nodo) > 0){
                 aux = aux.getIzquierda();
-            }else if(aux.getId_Estacion() < id_nodo){
+            }else if(aux.getCorreo().compareTo(id_nodo) < 0){
                 aux = aux.getDerecha();
             }else{
                 return aux;
@@ -229,7 +229,7 @@ public class AVLclave {
         
          try{
             //Abro stream, crea el fichero si no existe
-            FileWriter fw = new FileWriter("C:\\Users\\Raulk\\Documents\\NetBeansProjects\\paginaJSP\\web\\images\\AVLclave.dot");
+            FileWriter fw = new FileWriter("C:\\Users\\Raulk\\Documents\\NetBeansProjects\\paginaJSP\\web\\images\\AVLadmin.dot");
             fw.write("digraph g { \n");
             
             fw.write(graficar + "\n");
@@ -239,7 +239,7 @@ public class AVLclave {
             //Cierro el stream
             fw.close(); 
                 //Abro el stream, el fichero debe existir
-            FileReader fr=new FileReader("C:\\Users\\Raulk\\Documents\\NetBeansProjects\\paginaJSP\\web\\images\\AVLclave.dot");
+            FileReader fr=new FileReader("C:\\Users\\Raulk\\Documents\\NetBeansProjects\\paginaJSP\\web\\images\\AVLAdmin.dot");
             //Leemos el fichero y lo mostramos por pantalla
             int valor=fr.read();
             while(valor!=-1){
@@ -262,8 +262,8 @@ public class AVLclave {
         try {
 
             String dotPath = "C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe";
-            String fileInputPath = "C:\\Users\\Raulk\\Documents\\NetBeansProjects\\paginaJSP\\web\\images\\AVLclave.dot";
-            String fileOutputPath = "C:\\Users\\Raulk\\Documents\\NetBeansProjects\\paginaJSP\\web\\images\\AVLclave.jpg";
+            String fileInputPath = "C:\\Users\\Raulk\\Documents\\NetBeansProjects\\paginaJSP\\web\\images\\AVLadmin.dot";
+            String fileOutputPath = "C:\\Users\\Raulk\\Documents\\NetBeansProjects\\paginaJSP\\web\\images\\AVLadmin.jpg";
             //Users\\Raulk\\Documents\\NetBeansProjects\\practica1\\src\\imagenes\\lista.jpg
             String tParam = "-Tjpg";
             String tOParam = "-o";
@@ -285,24 +285,24 @@ public class AVLclave {
     }
     
     private void auxGraph(){
-        NodoC aux;
+        NodoAdmin aux;
         aux = raiz;
         graficar = "";
         rel = "";
         auxGraph2(aux);
     }
     
-    private void auxGraph2(NodoC aus){
+    private void auxGraph2(NodoAdmin aus){
         
         if(aus.getIzquierda() != null){
             auxGraph2(aus.getIzquierda());
         }
         
-        graficar += "nod" + aus.getId_Estacion() + " [shape=record ,color=\"green\", label= \" { Id estacion : " + aus.getId_Estacion()
-                        + " |  personas : " + "" + aus.getPersonas_sist() + " } | { nombre: " + aus.getNombre() + "| equilibrio: " + aus.getEq() + " }  \"] ; \n";
-        if(aus.getIzquierda()!=null) rel += "nod" + aus.getId_Estacion() + " -> nod" + aus.getIzquierda().getId_Estacion() + " [color = red] ; \n";
+        graficar += "nod" + aus.getCorreo() + " [shape=record ,color=\"green\", label= \" { correo : " + aus.getCorreo()
+                        + " |  contraseña: " + "" + aus.getPass() + " } | { equilibrio: " + aus.getEq() + " }  \"] ; \n";
+        if(aus.getIzquierda()!=null) rel += "nod" + aus.getCorreo() + " -> nod" + aus.getIzquierda().getCorreo() + " [color = red] ; \n";
         
-        if(aus.getDerecha()!=null) rel += "nod" + aus.getId_Estacion() + " -> nod" + aus.getDerecha().getId_Estacion() + " [color = red] ; \n";
+        if(aus.getDerecha()!=null) rel += "nod" + aus.getCorreo() + " -> nod" + aus.getDerecha().getCorreo() + " [color = red] ; \n";
         
         
         if(aus.getDerecha() != null){
@@ -311,23 +311,21 @@ public class AVLclave {
         
     }
     
-    
-    public boolean comprobar(int estacion, String pass){
-        NodoC aux;
+    public boolean comprobar(String correo, String pass) {
+        NodoAdmin aux;
         aux = raiz;
-        
-        while(aux != null){
-            if(aux.getId_Estacion() > estacion){
+        while (aux != null) {
+            if (aux.getCorreo().compareTo(correo) > 0) {
                 aux = aux.getIzquierda();
-            }else if(aux.getId_Estacion() < estacion){
+            } else if (aux.getCorreo().compareTo(correo) < 0) {
                 aux = aux.getDerecha();
-            }else if(aux.getId_Estacion() == estacion && aux.getPass().equals(pass)){
+            } else if ( aux.getPass().equals(pass)) {
                 return true;
-            }else{
+            } else {
                 return false;
             }
         }
-        
+
         return false;
     }
     

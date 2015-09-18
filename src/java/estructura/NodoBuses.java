@@ -11,8 +11,10 @@ package estructura;
  */
 public class NodoBuses {
 
-    public NodoBuses(int num_bus, String ruta) {
+    public NodoBuses(int num_bus, String ruta, String hinicia, String hfinal) {
         this.num_bus = num_bus;
+        this.horainicio = hinicia;
+        this.horafinal = hfinal;
         this.ruta = ruta;
         this.sig = null;
         this.ant = null;
@@ -22,6 +24,8 @@ public class NodoBuses {
     
     private int num_bus;
     private String ruta;
+    private String horainicio;
+    private String horafinal;
     private NodoBuses sig;
     private NodoBuses ant;
     public listaHoras list;
@@ -80,5 +84,33 @@ public class NodoBuses {
      */
     public void setAnt(NodoBuses ant) {
         this.ant = ant;
+    }
+
+    /**
+     * @return the horainicio
+     */
+    public String getHorainicio() {
+        return horainicio;
+    }
+
+    /**
+     * @param horainicio the horainicio to set
+     */
+    public void setHorainicio(String horainicio) {
+        this.horainicio = horainicio;
+    }
+
+    /**
+     * @return the horafinal
+     */
+    public String getHorafinal() {
+        return horafinal;
+    }
+
+    /**
+     * @param horafinal the horafinal to set
+     */
+    public void setHorafinal(String horafinal) {
+        this.horafinal = horafinal;
     }
 }

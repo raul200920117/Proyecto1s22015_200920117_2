@@ -297,4 +297,23 @@ public class choferAVL {
         }
         
     }
+    
+    public boolean comprobar(int clave , String pass){
+        Nodo aux;
+        aux = raiz;
+        
+        while(aux != null){
+            if(aux.getNumero() > clave){
+                aux = aux.getIzquierda();
+            }else if (aux.getNumero() < clave){
+                aux = aux.getDerecha();
+            }else if(aux.getNumero() == clave){
+                return true;
+            }
+            
+        }
+        
+        return false;
+    }
+    
 }

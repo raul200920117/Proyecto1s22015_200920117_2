@@ -92,4 +92,33 @@ public class prueba {
            return false; 
         }
     }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "addAdmin")
+    public String addAdmin(@WebParam(name = "correo") String correo, @WebParam(name = "password") String password) {
+        String resultado;
+        
+        resultado = "El usuario no se pudo insertar";
+        
+        if(correo.equals("0@0.com") || correo.equals("0@0.com")){
+            return resultado;
+        }else{
+            admin.insert(correo, password);
+            resultado = "administrador creado";
+        }
+            
+        return resultado;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "addEstacionGeneral")
+    public String addEstacionGeneral(@WebParam(name = "id_estacion") int id_estacion, @WebParam(name = "nombre") String nombre, @WebParam(name = "contrase\u00f1a") String contraseña) {
+        
+        
+        return null;
+    }
 }

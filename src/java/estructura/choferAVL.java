@@ -17,12 +17,13 @@ public class choferAVL {
     
     Nodo raiz;
     String graficar;
-    String rel;
+    String rel,ret;
    
     public choferAVL() {
         raiz = null;
         graficar = "";
         rel = "";
+        ret = "";
     }
     
  public boolean insert(int clave , String nombre, String apellido, String pass) {
@@ -187,27 +188,29 @@ public class choferAVL {
     }
     
        
-    public void mostrar(){
+   public String mostrar(){
         Nodo aux;
         aux = raiz;
+        ret="";
         auxMostrar(aux);
+        return ret;
      }
     
     private void auxMostrar(Nodo auxi) {
         
         System.out.println("act: " + auxi.getNumero() );
   
+        ret += "nodo : " + auxi.getNumero()  + "<br>";
+        if(auxi.getIzquierda() != null) ret += "izq: " + auxi.getIzquierda().getNumero()  + "<br>";
         
-        if(auxi.getIzquierda() != null){
-            System.out.println("izq: " + auxi.getIzquierda().getNumero());
-            auxMostrar(auxi.getIzquierda());            
-        }
+        if(auxi.getDerecha() != null) ret +=  "der: " + auxi.getDerecha().getNumero() + "<br>";
         
-        if(auxi.getDerecha() != null){
-            System.out.println("der: " + auxi.getDerecha().getNumero());
-            auxMostrar(auxi.getDerecha());
-        }
         
+        if(auxi.getIzquierda() != null)   auxMostrar(auxi.getIzquierda());            
+        
+        
+        if(auxi.getDerecha() != null)  auxMostrar(auxi.getDerecha());
+
     }
     
      public void graficar(){

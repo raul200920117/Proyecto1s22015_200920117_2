@@ -16,12 +16,13 @@ import java.io.IOException;
 public class AVLgeneral {
     public NodoG raiz;
     String graficar;
-    String rel;
+    String rel,ret;
     
     public AVLgeneral() {
         raiz = null;
         graficar = "";
         rel = "";
+        ret ="";
     }
     
  public boolean insert(int clave, String nombre, String pass) {
@@ -187,26 +188,29 @@ public class AVLgeneral {
     
     
        
-    public void mostrar(){
+   public String mostrar(){
         NodoG aux;
         aux = raiz;
+        ret="";
         auxMostrar(aux);
+        return ret;
      }
     
     private void auxMostrar(NodoG auxi) {
         
         System.out.println("act: " + auxi.getId_Estacion() );
   
+        ret += "nodo : " + auxi.getId_Estacion()  + "<br>";
+        if(auxi.getIzquierda() != null) ret += "izq: " + auxi.getIzquierda().getId_Estacion()  + "<br>";
         
-        if(auxi.getIzquierda() != null){
-            System.out.println("izq: " + auxi.getIzquierda().getId_Estacion());
-            auxMostrar(auxi.getIzquierda());            
-        }
+        if(auxi.getDerecha() != null) ret +=  "der: " + auxi.getDerecha().getId_Estacion() + "<br>";
         
-        if(auxi.getDerecha() != null){
-            System.out.println("der: " + auxi.getDerecha().getId_Estacion());
-            auxMostrar(auxi.getDerecha());
-        }
+        
+        if(auxi.getIzquierda() != null)   auxMostrar(auxi.getIzquierda());            
+        
+        
+        if(auxi.getDerecha() != null)  auxMostrar(auxi.getDerecha());
+
     }
     
     public NodoG modificar(int id_nodo){

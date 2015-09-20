@@ -17,6 +17,7 @@ public class AVLclave {
     NodoC raiz;
     String graficar;
     String rel;
+    String ret;
     
     public AVLclave() {
         raiz = null;
@@ -187,26 +188,29 @@ public class AVLclave {
     
     
        
-    public void mostrar(){
+    public String mostrar(){
         NodoC aux;
         aux = raiz;
+        ret="";
         auxMostrar(aux);
+        return ret;
      }
     
     private void auxMostrar(NodoC auxi) {
         
         System.out.println("act: " + auxi.getId_Estacion() );
   
+        ret += "nodo : " + auxi.getId_Estacion()  + "<br>";
+        if(auxi.getIzquierda() != null) ret += "izq: " + auxi.getIzquierda().getId_Estacion()  + "<br>";
         
-        if(auxi.getIzquierda() != null){
-            System.out.println("izq: " + auxi.getIzquierda().getId_Estacion());
-            auxMostrar(auxi.getIzquierda());            
-        }
+        if(auxi.getDerecha() != null) ret +=  "der: " + auxi.getDerecha().getId_Estacion() + "<br>";
         
-        if(auxi.getDerecha() != null){
-            System.out.println("der: " + auxi.getDerecha().getId_Estacion());
-            auxMostrar(auxi.getDerecha());
-        }
+        
+        if(auxi.getIzquierda() != null)   auxMostrar(auxi.getIzquierda());            
+        
+        
+        if(auxi.getDerecha() != null)  auxMostrar(auxi.getDerecha());
+
     }
     
     public NodoC modificar(int id_nodo){

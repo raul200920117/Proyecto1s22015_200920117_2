@@ -17,11 +17,12 @@ public class AVLadmin {
     NodoAdmin raiz;
     String graficar;
     String rel;
-    
+    String ret;
     public AVLadmin() {
         raiz = null;
         graficar = "";
         rel = "";
+        ret = "";
     }
     
  public boolean insert(String correo, String nombre) {
@@ -187,26 +188,29 @@ public class AVLadmin {
     
     
        
-    public void mostrar(){
+public String mostrar(){
         NodoAdmin aux;
         aux = raiz;
+        ret="";
         auxMostrar(aux);
+        return ret;
      }
     
     private void auxMostrar(NodoAdmin auxi) {
         
         System.out.println("act: " + auxi.getCorreo() );
   
+        ret += "nodo : " + auxi.getCorreo()  + " <br>";
+        if(auxi.getIzquierda() != null) ret += "izq: " + auxi.getIzquierda().getCorreo()  + "<br>";
         
-        if(auxi.getIzquierda() != null){
-            System.out.println("izq: " + auxi.getIzquierda().getCorreo());
-            auxMostrar(auxi.getIzquierda());            
-        }
+        if(auxi.getDerecha() != null) ret +=  "der: " + auxi.getDerecha().getCorreo() + "<br>";
         
-        if(auxi.getDerecha() != null){
-            System.out.println("der: " + auxi.getDerecha().getCorreo());
-            auxMostrar(auxi.getDerecha());
-        }
+        
+        if(auxi.getIzquierda() != null)   auxMostrar(auxi.getIzquierda());            
+        
+        
+        if(auxi.getDerecha() != null)  auxMostrar(auxi.getDerecha());
+
     }
     
     public NodoAdmin modificar(String id_nodo){

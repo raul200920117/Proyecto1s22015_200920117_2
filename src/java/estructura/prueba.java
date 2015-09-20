@@ -328,7 +328,6 @@ public class prueba {
     public String borraBus(@WebParam(name = "id_bus") int id_bus) {
         //TODO write your implementation code here:
         if(id_bus !=0){
-            buses.borrar(id_bus);
             buses.graficar();
             return "borrado el bus: #" + id_bus;
         }
@@ -359,7 +358,8 @@ public class prueba {
     @WebMethod(operationName = "dibujarClave")
     public String dibujarClave() {
         //TODO write your implementation code here:
-        return null;
+        String ret ="";
+        return ret;
     }
 
     /**
@@ -368,7 +368,9 @@ public class prueba {
     @WebMethod(operationName = "dibujarGeneral")
     public String dibujarGeneral() {
         //TODO write your implementation code here:
-        return null;
+        String ret = "";
+        
+        return ret;
     }
 
     /**
@@ -385,34 +387,78 @@ public class prueba {
      */
     @WebMethod(operationName = "imprimirGraficas")
     public String imprimirGraficas() {
-        //TODO write your implementation code here:
-        if(clave != null){
-            clave.graficar();
-        }
-               
-                
-        if(general != null){
-            general.graficar();
-        }
-        
-        
-        if(admin != null){
-            admin.graficar();
-        }
-        
-        if(chofer != null){
-            chofer.graficar();
-        }
-
        
-        if(buses != null){
+        //TODO write your implementation code here:
+        String manda="comiencan los datos <br>";
+            manda += " estaciones clave <br>";
+        if(clave != null){
+            manda += clave.mostrar() + "<br>";
             
         }
         
+        return manda;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "generales")
+    public String generales() {
+        //TODO write your implementation code here:
+        String manda="";
+            manda += " estaciones generales <br>";
+        if(general != null){
+            manda += general.mostrar() + "<br>";
+        }
         
+        return manda;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "choferess")
+    public String choferess() {
+        //TODO write your implementation code here:
+       String manda=""; 
+            manda += " avl choferes <br>";        
+        if(chofer != null){
+            manda += chofer.mostrar() +"<br>";
+        }
+
+        return manda;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "admins")
+    public String admins() {
+        //TODO write your implementation code here:
+                
+        String manda ="";
+        
+        if(admin != null){
+            manda += " avl administrador <br>";
+            manda += admin.mostrar() + "<br>";
+        }
+        return manda;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "buses")
+    public String buses() {
+        //TODO write your implementation code here:
+        String manda ="lista de buses";
+        if(buses !=null){
+            manda += buses.mostrar() + "<br>";
+        }
         return null;
     }
 
+    
     
 
 

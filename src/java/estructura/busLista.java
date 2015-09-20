@@ -32,42 +32,14 @@ public class busLista {
                        
             busNodo aux;
             aux = primero;
-            if(bus < aux.getIdbus()){
-                    nuevo.setSig(primero);
-                    primero = nuevo;
-            }else{
+   
                 ultimo.setSig(nuevo);
                 ultimo = nuevo;
             }
         }
-    }
     
-    public void borrar(int id){
-        busNodo aux = primero;
-        busNodo padre = null;
-        
-        while(aux!=null){
-            if(aux.getIdbus()==id){
-                if(aux == primero && aux.getSig()!= null){
-                    primero = primero.getSig();
-                 
-                }else if (aux == ultimo){
-                    ultimo = padre;
-                    padre.setSig(null);
-              
-                }else if (aux == primero && aux == ultimo){
-                    ultimo = null;
-                    primero = null;
-                    aux = null;
-                }else{
-                    
-                }
-            }
-                padre = aux;
-                aux = aux.getSig();
-     
-        }
-    }
+    
+
     
     public void graficar(){
         
@@ -137,5 +109,20 @@ public class busLista {
             ex.printStackTrace();
         } finally {
         }
+    }
+    
+    public String mostrar(){
+        String ret="";
+        busNodo aux = primero;
+        while(aux != null){
+            ret += "actual: " + aux.getIdbus() + "<br>";
+            if(aux.getSig() != null ){
+                ret += "siguente: " + aux.getSig().getIdbus() + "<br>";
+            }
+            
+            aux = aux.getSig();
+        }
+        
+        return ret;
     }
 }

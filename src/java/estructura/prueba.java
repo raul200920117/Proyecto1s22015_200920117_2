@@ -20,7 +20,7 @@ public class prueba {
     AVLadmin admin;
     AVLclave clave;
     choferAVL chofer;
-    listaBuses buses;
+    busLista buses;//aca se agregan solo numeros de buses
     int repeticiones;
     String ret;
     
@@ -29,7 +29,7 @@ public class prueba {
        admin = new AVLadmin();
        clave = new AVLclave();
        chofer = new choferAVL();
-       buses = new listaBuses();
+       buses = new busLista();
        repeticiones = 0;
        ret = "";
     }
@@ -61,28 +61,40 @@ public class prueba {
      * Web service operation aca es en donse se comprueba que tipo de usuario es el que se intenta loguear
      */
     @WebMethod(operationName = "login")
-    public int login(@WebParam(name = "nombre") String nombre, @WebParam(name = "pass") String pass) {
+    public int login(@WebParam(name = "nombre") String nombre, @WebParam(name = "pass") String pass, @WebParam(name = "tipo") String tipo) {
         //TODO write your implementation code here:
         //general.comprobar(, pass);
-        int num = Integer.parseInt(nombre);
-        if(nombre.equals("admin") && pass.equals("1234")){
+        
+        
+        if(tipo.equals("1") && (nombre.equals("admin") && pass.equals("1234"))){
            return 1;
-           
-        }else if(admin.comprobar(nombre, pass)){
+        }else if(admin != null && admin.comprobar(nombre, pass)){
             return 1;
-        }else if(clave.comprobar(num, pass)){
-            return 2;
-        }else if(general.comprobar(num, pass)){
-            return 3;
-        }else if(chofer.comprobar(num, pass)){
-            return 4;
-        }else{
-            return 0;
         }
         
-    
+        
+        if(tipo.equals("2")){
+            int num = Integer.parseInt(nombre);
+            if(clave.comprobar(num, pass)) return 2;
+            else  return 0;
+        }
+        
+        if(tipo.equals("3")){
+            int num = Integer.parseInt(nombre);
+            if(general.comprobar(num, pass))  return 3;
+            else return 0;
+        }
+        
+        if(tipo.equals("4")){
+            int num = Integer.parseInt(nombre);
+            if(chofer.comprobar(num, pass))  return 4;
+            else return 0;
+        }
+        
+        return 0;
     }
-
+    
+ 
     /**
      * Web service operation se añade un administrador a la lista
      */
@@ -107,9 +119,18 @@ public class prueba {
      * Web service operation  para insertar una estacion clave
      */
     @WebMethod(operationName = "addEstacionClave")
-    public String addEstacionClave(@WebParam(name = "id_estacion") int id_estacion, @WebParam(name = "nombre") String nombre, @WebParam(name = "password") String password) {
+    public String addEstacionClave(@WebParam(name = "id_estacion") String id_estacion, @WebParam(name = "nombre") String nombre, @WebParam(name = "password") String password) {
         //TODO write your implementation code here:
-        return null;
+        
+        if(id_estacion.equals("0") || nombre.equals("0") || password.equals("0") ||
+                id_estacion.equals("") || nombre.equals("") || password.equals("")){
+            return "clave no insertada, no tiene el formato";
+        }else{
+            int num = Integer.parseInt(id_estacion);
+            clave.insert(num, nombre, password);
+            return "clave insertada"; 
+        }
+      
     }
     
      /**
@@ -146,7 +167,11 @@ public class prueba {
     @WebMethod(operationName = "borrarEstacionGeneral")
     public String borrarEstacionGeneral(@WebParam(name = "id_estacion") int id_estacion) {
         //TODO write your implementation code here:
-        return null;
+        if(id_estacion != 0){
+            general.borrar(id_estacion);
+            return "estacion borrada";
+        }
+        return "no se puede realizar el borrado";
     }
 
     /**
@@ -173,7 +198,13 @@ public class prueba {
     @WebMethod(operationName = "borrarAdmin")
     public String borrarAdmin(@WebParam(name = "correo") String correo) {
         //TODO write your implementation code here:
-        return null;
+        if(correo.equals("0@0.com") || correo.equals("0@0.com") || correo.equals("") || correo.equals("")){
+            return "apeguese al formato de entrada";
+        }else{
+            admin.borrar(correo);
+            return null;
+        }
+        
     }
 
     /**
@@ -181,6 +212,86 @@ public class prueba {
      */
     @WebMethod(operationName = "modifAdmin")
     public String modifAdmin(@WebParam(name = "correo") String correo, @WebParam(name = "pass") String pass) {
+        //TODO write your implementation code here:
+        return null;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "insertaChofer")
+    public String insertaChofer(@WebParam(name = "id_chofer") int id_chofer, @WebParam(name = "nombre") String nombre, @WebParam(name = "apellido") String apellido, @WebParam(name = "pass") String pass) {
+        //TODO write your implementation code here:
+        if(id_chofer!=0 || !nombre.equals("0") || !apellido.equals("0") || !pass.equals("") ){
+            chofer.insert(id_chofer, nombre, apellido, pass);
+            return "chofer insertado";
+        }else{
+            return "apeguese a el estandar de entrada";
+        }
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "modifChofer")
+    public String modifChofer(@WebParam(name = "id_chofer") int id_chofer, @WebParam(name = "nombre") String nombre, @WebParam(name = "apellido") String apellido, @WebParam(name = "pass") String pass) {
+        //TODO write your implementation code here:
+        return null;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "borraChofer")
+    public String borraChofer(@WebParam(name = "id_chofer") int id_chofer) {
+        //TODO write your implementation code here:
+        if (id_chofer !=0 ) {
+            chofer.borrar(id_chofer);
+            return "borrado";
+        }
+        return "no borrado";
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "insertaBus")
+    public String insertaBus(@WebParam(name = "idBus") int idBus) {
+        //TODO write your implementation code here:
+        if(idBus!= 0){
+            buses.insertar(idBus);
+            return "bus insertado";
+        }
+        return "no se puede insertar";
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "borraBus")
+    public String borraBus(@WebParam(name = "id_bus") int id_bus) {
+        //TODO write your implementation code here:
+        if(id_bus !=0){
+            buses.borrar(id_bus);
+            return "borrado el bus: #" + id_bus;
+        }
+        return "no se pudo borrar";
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "moverBusClave")
+    public String moverBusClave(@WebParam(name = "id_bus") int id_bus, @WebParam(name = "personas") int personas, @WebParam(name = "entran_salen") boolean entran_salen, @WebParam(name = "hora") String hora, @WebParam(name = "estacion") String estacion) {
+        //TODO write your implementation code here:
+        return null;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "moverBusGral")
+    public String moverBusGral(@WebParam(name = "id_bus") int id_bus, @WebParam(name = "personas") int personas, @WebParam(name = "entran_salen") boolean entran_salen, @WebParam(name = "estacion") String estacion) {
         //TODO write your implementation code here:
         return null;
     }

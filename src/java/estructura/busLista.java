@@ -42,4 +42,24 @@ public class busLista {
             }
         }
     }
+    
+    public void borrar(int id){
+        busNodo aux = primero;
+        busNodo padre = null;
+        
+        while(aux!=null){
+            if(aux.getIdbus()==id){
+                if(aux == primero){
+                    primero = primero.getSig();
+                    break;
+                }else{
+                    padre.setSig(aux.getSig());
+                    break;
+                }
+            }else{
+                padre = aux;
+                aux = aux.getSig();
+            }
+        }
+    }
 }

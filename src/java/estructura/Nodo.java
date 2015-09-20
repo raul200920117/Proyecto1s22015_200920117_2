@@ -19,6 +19,7 @@ public class Nodo {
         this.padre = padre;
         this.izquierda = null;
         this.derecha = null;
+        dias = new listaDias();
     }
     
     private int numero;
@@ -29,7 +30,7 @@ public class Nodo {
     private Nodo padre;
     private Nodo izquierda;
     private Nodo derecha;
-
+    public  listaDias dias;
     /**
      * @return the numero
      */

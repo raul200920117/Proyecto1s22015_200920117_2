@@ -18,7 +18,7 @@ public class choferAVL {
     Nodo raiz;
     String graficar;
     String rel;
-    
+   
     public choferAVL() {
         raiz = null;
         graficar = "";

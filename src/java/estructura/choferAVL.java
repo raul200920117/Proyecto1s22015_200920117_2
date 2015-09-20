@@ -316,4 +316,21 @@ public class choferAVL {
         return false;
     }
     
+    public Nodo modificar(int clave){
+        Nodo aux;
+        aux = raiz;
+        
+        while(aux != null){
+            if(aux.getNumero() > clave){
+                aux = aux.getIzquierda();
+            }else if (aux.getNumero() < clave){
+                aux = aux.getDerecha();
+            }else{
+                return aux;
+            } 
+        }
+        
+        return null;
+    }
+    
 }

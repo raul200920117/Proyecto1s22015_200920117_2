@@ -108,6 +108,7 @@ public class prueba {
             return resultado;
         }else{
             admin.insert(correo, password);
+            admin.graficar();
             resultado = "administrador creado";
         }
             
@@ -128,6 +129,7 @@ public class prueba {
         }else{
             int num = Integer.parseInt(id_estacion);
             clave.insert(num, nombre, password);
+            clave.graficar();
             return "clave insertada"; 
         }
       
@@ -140,7 +142,7 @@ public class prueba {
     public String borrarEstacionClave(@WebParam(name = "numeroEstacion") int numeroEstacion) {
         //metodo para borrar una estacion clave
         clave.borrar(numeroEstacion);
-        
+        clave.graficar();
         return "estacion borrada";
     }
     
@@ -154,6 +156,7 @@ public class prueba {
                 nombre.equals("") || contraseña.equals(""))){
             
             general.insert(id_estacion, nombre, contraseña);
+            general.graficar();
             return "nodo insertado correctamente";
             
         }else{
@@ -169,6 +172,7 @@ public class prueba {
         //TODO write your implementation code here:
         if(id_estacion != 0){
             general.borrar(id_estacion);
+            general.graficar();
             return "estacion borrada";
         }
         return "no se puede realizar el borrado";
@@ -180,7 +184,19 @@ public class prueba {
     @WebMethod(operationName = "modificarEstClave")
     public String modificarEstClave(@WebParam(name = "id_estacion") int id_estacion, @WebParam(name = "nombre") String nombre, @WebParam(name = "pass") String pass) {
         //TODO write your implementation code here:
-        return null;
+        if(id_estacion!=0){
+            NodoC aux = clave.modificar(id_estacion); 
+            if(aux != null) {
+                aux.setNombre(nombre);
+                aux.setPass(pass);
+                clave.graficar();
+                return "datos modificados en el nodo " + id_estacion;
+            }else{
+                return "el nodo no existe";
+            }
+        }
+        
+        return "ingrese un numero valido";
     }
 
     /**
@@ -189,7 +205,19 @@ public class prueba {
     @WebMethod(operationName = "modificarEstGeneral")
     public String modificarEstGeneral(@WebParam(name = "id_estacion") int id_estacion, @WebParam(name = "nombre") String nombre, @WebParam(name = "pass") String pass) {
         //TODO write your implementation code here:
-        return null;
+        if(id_estacion!=0){
+            NodoG aux = general.modificar(id_estacion); 
+            if(aux != null) {
+                aux.setNombre(nombre);
+                aux.setPass(pass);
+                general.graficar();
+                return "datos modificados en el nodo " + id_estacion;
+            }else{
+                return "el nodo no existe";
+            }
+        }
+        
+        return "ingrese un numero valido";
     }
 
     /**
@@ -202,7 +230,8 @@ public class prueba {
             return "apeguese al formato de entrada";
         }else{
             admin.borrar(correo);
-            return null;
+            admin.graficar();
+            return "borrado";
         }
         
     }
@@ -213,7 +242,18 @@ public class prueba {
     @WebMethod(operationName = "modifAdmin")
     public String modifAdmin(@WebParam(name = "correo") String correo, @WebParam(name = "pass") String pass) {
         //TODO write your implementation code here:
-        return null;
+        if(!(correo.equals("0") || correo.equals(""))){
+            NodoAdmin aux = admin.modificar(correo);
+            if(aux != null){
+                aux.setPass(pass);
+                admin.graficar();
+                return "datos modificados";
+            }else{
+                return "el nodo no existe";
+            }
+            
+        }
+        return "ingrese un numero valido";
     }
 
     /**
@@ -224,6 +264,7 @@ public class prueba {
         //TODO write your implementation code here:
         if(id_chofer!=0 || !nombre.equals("0") || !apellido.equals("0") || !pass.equals("") ){
             chofer.insert(id_chofer, nombre, apellido, pass);
+            chofer.graficar();
             return "chofer insertado";
         }else{
             return "apeguese a el estandar de entrada";
@@ -236,7 +277,19 @@ public class prueba {
     @WebMethod(operationName = "modifChofer")
     public String modifChofer(@WebParam(name = "id_chofer") int id_chofer, @WebParam(name = "nombre") String nombre, @WebParam(name = "apellido") String apellido, @WebParam(name = "pass") String pass) {
         //TODO write your implementation code here:
-        return null;
+        if(id_chofer != 0){
+            Nodo aux = chofer.modificar(id_chofer); 
+            if(aux != null) {
+                aux.setNombre(nombre);
+                aux.setPass(pass);
+                chofer.graficar();
+                return "datos modificados en el nodo " + id_chofer;
+            }else{
+                return "el nodo no existe";
+            }
+        }
+        
+        return "ingrese un numero valido";
     }
 
     /**
@@ -245,10 +298,12 @@ public class prueba {
     @WebMethod(operationName = "borraChofer")
     public String borraChofer(@WebParam(name = "id_chofer") int id_chofer) {
         //TODO write your implementation code here:
-        if (id_chofer !=0 ) {
+        if (id_chofer != 0 ) {
             chofer.borrar(id_chofer);
+            chofer.graficar();
             return "borrado";
         }
+        
         return "no borrado";
     }
 
@@ -260,6 +315,7 @@ public class prueba {
         //TODO write your implementation code here:
         if(idBus!= 0){
             buses.insertar(idBus);
+            buses.graficar();
             return "bus insertado";
         }
         return "no se puede insertar";
@@ -273,6 +329,7 @@ public class prueba {
         //TODO write your implementation code here:
         if(id_bus !=0){
             buses.borrar(id_bus);
+            buses.graficar();
             return "borrado el bus: #" + id_bus;
         }
         return "no se pudo borrar";
@@ -296,6 +353,67 @@ public class prueba {
         return null;
     }
 
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "dibujarClave")
+    public String dibujarClave() {
+        //TODO write your implementation code here:
+        return null;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "dibujarGeneral")
+    public String dibujarGeneral() {
+        //TODO write your implementation code here:
+        return null;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "cargaMasiva")
+    public String cargaMasiva(@WebParam(name = "datos") String datos) {
+        //TODO write your implementation code here:
+        return null;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "imprimirGraficas")
+    public String imprimirGraficas() {
+        //TODO write your implementation code here:
+        if(clave != null){
+            clave.graficar();
+        }
+               
+                
+        if(general != null){
+            general.graficar();
+        }
+        
+        
+        if(admin != null){
+            admin.graficar();
+        }
+        
+        if(chofer != null){
+            chofer.graficar();
+        }
+
+       
+        if(buses != null){
+            
+        }
+        
+        
+        return null;
+    }
+
+    
 
 
 }

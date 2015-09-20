@@ -349,7 +349,15 @@ public class prueba {
     @WebMethod(operationName = "moverBusGral")
     public String moverBusGral(@WebParam(name = "id_bus") int id_bus, @WebParam(name = "personas") int personas, @WebParam(name = "entran_salen") boolean entran_salen, @WebParam(name = "estacion") String estacion) {
         //TODO write your implementation code here:
-        return null;
+        String ret="";
+        
+        for(int i=0; i<10 ; i++){
+            ret+= "<form name=\"imagenes\" action=\"imagenes.jsp\"  class=\"cajaFlotante\"> <br>";
+            ret+="aca irian los movimientos <br>";
+            ret+= "</form> <br>" ;
+        }
+        
+        return ret;
     }
 
     /**
